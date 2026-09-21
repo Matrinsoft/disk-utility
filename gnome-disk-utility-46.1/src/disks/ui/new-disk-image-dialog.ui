@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <!-- interface-requires gtk+ 3.0 -->
+  <template class="GduNewDiskImageDialog" parent="GtkDialog">
+    <property name="width_request">550</property>
+    <property name="border_width">12</property>
+    <property name="title" translatable="yes">New Disk Image</property>
+    <property name="resizable">False</property>
+    <property name="modal">True</property>
+    <property name="type_hint">dialog</property>
+    <signal name="response" handler="new_disk_image_dialog_response_cb" />
+
+    <child internal-child="vbox">
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="spacing">12</property>
+        <child>
+          <object class="GtkGrid">
+            <property name="visible">True</property>
+            <property name="hexpand">True</property>
+            <property name="row_spacing">12</property>
+            <property name="column_spacing">12</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="xalign">1</property>
+                <property name="label" translatable="yes">Image _Size</property>
+                <property name="use_underline">True</property>
+                <property name="mnemonic_widget">size_spin_button</property>
+                <style>
+                  <class name="dim-label" />
+                </style>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">0</property>
+                <property name="width">1</property>
+                <property name="height">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="xalign">1</property>
+                <property name="label" translatable="yes">_Name</property>
+                <property name="use_underline">True</property>
+                <property name="mnemonic_widget">name_entry</property>
+                <style>
+                  <class name="dim-label" />
+                </style>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">1</property>
+                <property name="width">1</property>
+                <property name="height">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="xalign">1</property>
+                <property name="label" translatable="yes">Save in _Folder</property>
+                <property name="use_underline">True</property>
+                <property name="mnemonic_widget">choose_folder_button</property>
+                <style>
+                  <class name="dim-label" />
+                </style>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">2</property>
+                <property name="width">1</property>
+                <property name="height">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSpinButton" id="size_spin_button">
+                <property name="visible">True</property>
+                <property name="tooltip_text" translatable="yes">The size of the image to create</property>
+                <property name="activates_default">True</property>
+                <property name="adjustment">size_adjustment</property>
+                <property name="digits">3</property>
+                <signal name="value-changed" handler="new_disk_image_details_changed_cb" swapped="yes" />
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">0</property>
+                <property name="width">1</property>
+                <property name="height">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="name_entry">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="hexpand">True</property>
+                <property name="activates_default">True</property>
+                <signal name="changed" handler="new_disk_image_details_changed_cb" swapped="yes" />
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">1</property>
+                <property name="width">2</property>
+                <property name="height">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkFileChooserButton" id="choose_folder_button">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="orientation">vertical</property>
+                <property name="action">select-folder</property>
+                <property name="local_only">False</property>
+                <property name="title" translatable="yes">Select a Folder</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">2</property>
+                <property name="width">2</property>
+                <property name="height">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkComboBoxText" id="size_unit_combobox">
+                <property name="visible">True</property>
+                <signal name="changed" handler="new_disk_image_size_unit_changed_cb" swapped="yes" />
+                <items>
+                  <item translatable="yes">bytes</item>
+                  <item translatable="yes">kB</item>
+                  <item translatable="yes">MB</item>
+                  <item translatable="yes">GB</item>
+                  <item translatable="yes">TB</item>
+                  <item translatable="yes">PB</item>
+                  <item translatable="yes">KiB</item>
+                  <item translatable="yes">MiB</item>
+                  <item translatable="yes">GiB</item>
+                  <item translatable="yes">TiB</item>
+                  <item translatable="yes">PiB</item>
+                </items>
+              </object>
+              <packing>
+                <property name="left_attach">2</property>
+                <property name="top_attach">0</property>
+                <property name="width">1</property>
+                <property name="height">1</property>
+              </packing>
+            </child>
+          </object>
+        </child>
+
+          <!-- Cancel, Create buttons -->
+        <child internal-child="action_area">
+          <object class="GtkButtonBox">
+            <property name="layout_style">end</property>
+            <child>
+              <object class="GtkButton" id="cancel_button">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="label" translatable="yes">_Cancel</property>
+                <property name="use_underline">True</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="create_image_button">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="can_default">True</property>
+                <property name="receives_default">True</property>
+                <property name="use_underline">True</property>
+                <property name="label" translatable="yes">Attach new _Image…</property>
+              </object>
+            </child>
+          </object>
+        </child>
+
+      </object>
+    </child>
+
+    <action-widgets>
+      <action-widget response="cancel">cancel_button</action-widget>
+      <action-widget response="ok" default="true">create_image_button</action-widget>
+    </action-widgets>
+  </template>
+
+  <object class="GtkAdjustment" id="size_adjustment">
+    <property name="upper">10000000000000</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">100</property>
+  </object>
+
+</interface>
